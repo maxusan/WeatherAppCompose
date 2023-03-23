@@ -1,4 +1,4 @@
-package com.banana.weatherAppCompose.ui.theme
+package com.banana.weatherAppCompose.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
