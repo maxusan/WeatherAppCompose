@@ -28,13 +28,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: WeatherViewModel by viewModels()
-    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+    private val permissionLauncher: ActivityResultLauncher<Array<String>> by lazy {
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            viewModel.loadWeatherInfo()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        permissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-                viewModel.loadWeatherInfo()
-            }
         permissionLauncher.launch(
             arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -43,18 +44,22 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             WeatherAppComposeTheme {
-                Box {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(DarkBlue)
-                    ) {
-                        WeatherCard(state = viewModel.state, backgroundColor = DeepBlue)
-                        Spacer(modifier = Modifier.height(16.dp))
-                        WeatherForecast(state = viewModel.state)
-                    }
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
                     if (viewModel.state.isLoading) {
                         CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    } else {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(DarkBlue)
+                        ) {
+                            WeatherCard(state = viewModel.state, backgroundColor = DeepBlue)
+                            Spacer(modifier = Modifier.height(16.dp))
+                            WeatherForecast(state = viewModel.state)
+                        }
                     }
                     viewModel.state.error?.let { error ->
                         Text(
@@ -65,7 +70,6 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 }
-
             }
         }
     }
