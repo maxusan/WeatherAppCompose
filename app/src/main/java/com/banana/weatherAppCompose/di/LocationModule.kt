@@ -10,9 +10,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class LocationModule {
+interface LocationModule {
 
     @Binds
     @Singleton
-    abstract fun bindLocationTracker(defaultLocationTracker: DefaultLocationTracker): LocationTracker
+     fun bindLocationTracker(defaultLocationTracker: DefaultLocationTracker): LocationTracker
 }
