@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                                 .background(DarkBlue)
                         ) {
                             WeatherCard(state = viewModel.state, backgroundColor = DeepBlue)
-                            Spacer(modifier = Modifier.height(16.dp))
+                            Spacer(modifier = Modifier.height(4.dp))
                             WeatherForecast(state = viewModel.state)
                         }
                     }

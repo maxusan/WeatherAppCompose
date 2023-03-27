@@ -26,7 +26,7 @@ fun DayWeatherItem(modifier: Modifier = Modifier, weatherData: List<WeatherData>
     val middleWeatherData = weatherData[weatherData.size / 2]
     Card(
         modifier = modifier
-            .padding(8.dp)
+            .padding(vertical = 8.dp)
             .height(64.dp),
         shape = RoundedCornerShape(8.dp),
         backgroundColor = DeepBlue,
